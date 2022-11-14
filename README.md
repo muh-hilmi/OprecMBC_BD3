@@ -10,7 +10,7 @@
 
 ##### Deskripsi file:
 1. Tugas 2_Python (4 files)
-2. Tugas Hadiah_ TK Inter Calendar Todo list
+2. Tugas Hadiah_ TK Inter Calendar Todo list [ NEW ]
 3. ...
 
 Note : Repository ini masih terus diupdate
