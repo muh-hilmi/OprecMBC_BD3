@@ -1,8 +1,11 @@
 import tkinter as tk
+#tkinter adalah library GUI standar python dengan komponen modulnya seperti Button, Label, Frame, dan Window
 from tkinter import ttk
 from tkcalendar import Calendar
+#tkcalendar adalah library untuk membuat widget calendar
 from tkinter.scrolledtext import ScrolledText
 from time import strftime
+#time adalah library yang harus digunakan apabila ingin mengolah waktu dengan tepat
 todos ={}
 
 def detailTodo(cb = None):
