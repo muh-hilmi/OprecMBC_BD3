@@ -87,8 +87,8 @@ def title():
     root.after(1000, title)
 
 root = tk.Tk()
-cal = Calendar(root, font = "Times", weight = "Bold", selectmode = 'day', locale = 'id_ID', cursor = 'hand1')
-cal.grid(row = 1, column = 0, sticky = 'N' ,rowspan = 7)
+cal = Calendar(root, font = "Arial 18", selectmode = 'day', locale = 'id_ID', cursor='hand2',weekendbackground='red',) #ubah font jadi arial 20,kursor jadi hand2, warna weekend jadi merah
+cal.grid(row = 0, column = 0, sticky = 'N' ,rowspan = 10) #ubah row mulai dari 0
 cal.bind("<<CalendarSelected>>", ListTodo)
 tanggal = str(cal.selection_get())
 treev = ttk.Treeview(root)
@@ -104,7 +104,7 @@ treev.heading("1", text="JAM")
 treev.heading("2", text='JUDUL')
 btnAdd = tk.Button(root, text = "Tambah", width = 20, bg = "PeachPuff3", fg = "black", command = AddForm)
 btnAdd.grid(row = 4, column = 1, sticky = "N")
-btnDel = tk.Button(root, text = "Hapus", width = 20, bg = "PeachPuff3", fg = "black", command = delTodo)
+btnDel = tk.Button(root, text = "Hapus", width = 20, bg = "orange", fg = "black", command = delTodo) #ubah button warna jadi orange
 btnDel.grid(row = 4, column = 2 , sticky= "N")
 btnLoad = tk.Button(root, text = "Load", width = 20, bg = "PeachPuff3", fg = "black", command = LoadTodos)
 btnLoad.grid(row = 5, column = 1, sticky = "S")
@@ -112,4 +112,5 @@ btnSave = tk.Button(root, text = "Save", width = 20, bg = "PeachPuff3", fg = "bl
 btnSave.grid(row = 5, column = 2, sticky = "S")
 title()
 root.mainloop()
+
 
