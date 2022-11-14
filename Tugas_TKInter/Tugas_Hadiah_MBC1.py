@@ -1,8 +1,8 @@
 import tkinter as tk
-from time import strftime
 from tkinter import ttk
-from tkinter.scrolledtext import ScrolledText
 from tkcalendar import Calendar
+from tkinter.scrolledtext import ScrolledText
+from time import strftime
 todos ={}
 
 def detailTodo(cb = None):
@@ -13,14 +13,14 @@ def detailTodo(cb = None):
     selectedTodo = todos[tanggal][selectedIndex]
     judul = tk.StringVar(value= selectedTodo['Judul'])
     tk.Label(win, text = "Tanggal:").grid(row =0, column= 0, sticky= "N")
-    tk.Label(win, text ="{} | {}". format(tanggal, selectedTodo["Waktu"])).grid(row = 0, column= 1, sticky="E")
+    tk.Label(win, text = "{} | {}". format(tanggal, selectedTodo["Waktu"])).grid(row = 0, column= 1, sticky="E")
     tk.Label(win, text = "Judul:"). grid(row = 1, column= 0, sticky= "N")
     tk.Entry(win, state = "readonly", textvariable= judul).grid(row=1, column= 1, sticky= "E") #Merubah state disabled menjadi readonly
     tk.Label(win, text = "Keterangan:").grid(row=2, column=0, sticky= "N")
     keterangan = ScrolledText(win, width =12, height= 5)
     keterangan.grid(row = 2, column= 1, sticky= "E")
     keterangan.insert(tk.INSERT, selectedTodo["Keterangan"])
-    keterangan.configure(state= "disabled")
+    keterangan.configure(state = "disabled")
 
 def LoadTodos():
     global todos
@@ -31,7 +31,7 @@ def LoadTodos():
     ListTodo()
 
 def SaveTodos():
-    f = open ('mytodo.dat', 'w')
+    f = open('mytodo.dat', 'w')
     f.write(str(todos))
     f.close()
 
@@ -51,9 +51,9 @@ def ListTodo(cb = None):
     
 def addTodo(win, key, jam, menit, judul, keterangan):
     newTodo = {
-    "Waktu":"{}:{}".format(jam.get(), menit.get()),
-    "Judul":judul.get(),
-    "Keterangan": keterangan.get("1.0", tk.END)
+        "Waktu":"{}:{}".format(jam.get(), menit.get()),
+        "Judul":judul.get(),
+        "Keterangan": keterangan.get("1.0", tk.END)
     }
     if key in todos:
         todos[key].append(newTodo)
@@ -81,9 +81,35 @@ def AddForm():
 
 def title():
     waktu = strftime("%H : %M")
-    tanggal_now = strftime("%Y-%m-%d")
-    #Saya menambahkan variabel tanggal_now yang berisikan tanggal secara realtime
+    tanggal_now = strftime("%Y-%m-%d") #Saya menambahkan variabel tanggal_now yang berisikan tanggal secara realtime
     tanggal = str(cal.selection_get())
-    root.title(tanggal_now + " | " + waktu + " | Tanggal yang dipilih : " + tanggal)
-    #Saya menambahkan tanggal_now ke root.title supaya menampilkan tanggal secara realtime
+    root.title(tanggal_now + " | " + waktu + " | Tanggal yang dipilih : " + tanggal) #Saya menambahkan tanggal_now ke root.title supaya menampilkan tanggal secara realtime
     root.after(1000, title)
+
+root = tk.Tk()
+cal = Calendar(root, font = "Times", weight = "Bold", selectmode = 'day', locale = 'id_ID', cursor = 'hand1')
+cal.grid(row = 1, column = 0, sticky = 'N' ,rowspan = 7)
+cal.bind("<<CalendarSelected>>", ListTodo)
+tanggal = str(cal.selection_get())
+treev = ttk.Treeview(root)
+treev.grid(row = 0, column = 1, sticky = 'WNE', rowspan = 4, columnspan = 2)
+scrollBar = tk.Scrollbar(root, orient = "vertical", command = treev.yview)
+scrollBar.grid(row = 0, column = 3, sticky = "ENS", rowspan = 4)
+treev.configure(yscrollcommand=scrollBar.set)
+treev.bind("<Double-1>", detailTodo)
+treev["columns"] = ('1', '2')
+treev["show"] = 'headings'
+treev.column("1", width=100)
+treev.heading("1", text="JAM")
+treev.heading("2", text='JUDUL')
+btnAdd = tk.Button(root, text = "Tambah", width = 20, bg = "PeachPuff3", fg = "black", command = AddForm)
+btnAdd.grid(row = 4, column = 1, sticky = "N")
+btnDel = tk.Button(root, text = "Hapus", width = 20, bg = "PeachPuff3", fg = "black", command = delTodo)
+btnDel.grid(row = 4, column = 2 , sticky= "N")
+btnLoad = tk.Button(root, text = "Load", width = 20, bg = "PeachPuff3", fg = "black", command = LoadTodos)
+btnLoad.grid(row = 5, column = 1, sticky = "S")
+btnSave = tk.Button(root, text = "Save", width = 20, bg = "PeachPuff3", fg = "black", command = SaveTodos)
+btnSave.grid(row = 5, column = 2, sticky = "S")
+title()
+root.mainloop()
+
